@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import { requireAuth } from './auth'
 
 Vue.use(Router)
 
@@ -14,7 +15,8 @@ export default new Router({
     },
     {
       path: '/about',
-      name: 'home',
+      name: 'about',
+      beforeEnter: requireAuth,
       component: () => import('./views/About.vue')
     },
     {
@@ -23,9 +25,19 @@ export default new Router({
       component: () => import('./views/Signin.vue')
     },
     {
+      path: '/callback',
+      name: 'callback',
+      component: () => import('./views/Callback.vue')
+    },
+    {
       path: '/signup',
       name: 'signup',
       component: () => import('./views/Signup.vue')
+    },
+    {
+      path: '/signout',
+      name: 'signout',
+      component: () => import('./views/Signout.vue')
     }
   ]
 })

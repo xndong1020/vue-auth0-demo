@@ -11,7 +11,7 @@
       </v-list>
     </v-navigation-drawer>
 
-    <Navbar @sidebarClicked="toggleSidebar" @sidebar="sidebar" :menuItems="menuItems" />
+    <Navbar @sidebarClicked="toggleSidebar" @sidebar="sidebar" :menuItems="menuItems" app />
 
     <v-container>
       <v-content>
@@ -22,7 +22,9 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Navbar from "@/components/Navbar.vue";
+
 export default {
   name: "App",
   components: {
@@ -30,14 +32,29 @@ export default {
   },
   data() {
     return {
-      sidebar: false,
-      menuItems: [
-        { title: "Home", path: "/", icon: "home" },
-        { title: "About", path: "/about", icon: "info" },
-        { title: "Sign Up", path: "/signup", icon: "face" },
-        { title: "Sign In", path: "/signin", icon: "lock_open" }
-      ]
+      sidebar: false
     };
+  },
+  computed: {
+    ...mapState({
+      user: "auth"
+    }),
+    menuItems() {
+      if (this.user.id) {
+        return [
+          { title: "Home", path: "/", icon: "home" },
+          { title: "About", path: "/about", icon: "info" },
+          { title: "Sign Out", path: "/signout", icon: "close" }
+        ];
+      } else {
+        return [
+          { title: "Home", path: "/", icon: "home" },
+          { title: "About", path: "/about", icon: "info" },
+          { title: "Sign Up", path: "/signup", icon: "face" },
+          { title: "Sign In", path: "/signin", icon: "lock_open" }
+        ];
+      }
+    }
   },
   methods: {
     toggleSidebar() {
