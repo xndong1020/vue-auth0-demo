@@ -8,22 +8,18 @@
         <form>
           <v-layout column>
             <v-flex>
-              <v-text-field name="email" label="Email" id="email" type="email" required></v-text-field>
-            </v-flex>
-            <v-flex>
-              <v-text-field name="password" label="Password" id="password" type="password" required></v-text-field>
+              <v-text-field v-model="email" :rules="emailRules" label="Email" type="email"></v-text-field>
             </v-flex>
             <v-flex>
               <v-text-field
-                name="confirmPassword"
-                label="Confirm Password"
-                id="confirmPassword"
+                v-model="password"
+                :rules="passwordRules"
+                label="Password"
                 type="password"
-                required
               ></v-text-field>
             </v-flex>
             <v-flex class="text-xs-center" mt-5>
-              <v-btn color="primary" type="submit">Sign Up</v-btn>
+              <v-btn color="primary" type="button" @click.stop.prevent="onSubmit">Sign Up</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -33,5 +29,32 @@
 </template>
 
 <script>
-export default {};
+import { webAuth } from "../auth";
+export default {
+  data() {
+    return {
+      email: "",
+      password: "",
+      emailRules: [v => !!v || "Email is required"],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => v.length >= 6 || "Password must be 6 digits long"
+      ]
+    };
+  },
+  methods: {
+    onSubmit() {
+      const self = this
+      webAuth.signup({
+            connection: 'Username-Password-Authentication',
+            email: this.email,
+            password: this.password,
+            user_metadata: { plan: 'silver', team_id: 'a111' } // extra information
+        }, function (err) {
+            if (err) return alert('Something went wrong: ' + err.message);
+            self.$router.push('/signin')
+        });
+    }
+  }
+};
 </script>
