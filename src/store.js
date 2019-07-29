@@ -23,9 +23,20 @@ export default new Vuex.Store({
       auth.name = name
       auth.email = email
       auth.id = id
+    },
+    // SOCKET_connect(data, payload) {
+    //   console.log('SOCKET_MUTATION_myEvent', data, payload)
+    // },
+    SOCKET_myEvent(data, payload) {
+      console.log('SOCKET_MUTATION_myEvent', data, payload)
     }
   },
   actions: {
-
+    // SOCKET_connect(data, payload) {
+    //   console.log('SOCKET_action_myEvent', data, payload)
+    // },
+    SOCKET_myEvent(data, payload) {
+      console.log('SOCKET_action_myEvent', data, payload)
+    }
   }
 })

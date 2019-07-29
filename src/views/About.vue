@@ -13,8 +13,23 @@ export default {
     })
   },
   mounted() {
-    console.log("id", JSON.parse(JSON.stringify(this.user)));
-  }
+    // this.sockets.subscribe("test_event", data => {
+    //   console.log(`received data`, data);
+    // });
+    // this.$socket.emit('message','1111111111');
+
+    // this.$socket.emit('myEvent', {data: 'test data'});
+
+    // this.sockets.unsubscribe("test_event");
+  },
+  // sockets:{
+  //   connect: function(){
+  //     console.log('socket connected')
+  //   },
+  //   message: function(val){
+  //     console.log('received return :'+ val)
+  //   }
+  // },
 };
 </script>
 
